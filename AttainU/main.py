@@ -1,4 +1,4 @@
-class Teachers():
+class Teachers:
 
     Teacher_Login = []
     Teacher_Details = []
@@ -7,7 +7,6 @@ class Teachers():
 
     def __init__(self):
         print()
-        print("Announcement :",Admin.imp_announcement)
         print()
         print("!!! Welcome Teachers !!!")
         print()
@@ -144,14 +143,12 @@ class Teachers():
             self.EditDetails()
 
 
-class Student:
+class Student():
     Student_Login = []
     Student_Details = []
     Student_ID = 1
 
     def __init__(self):
-        print()
-        print("Announcement :",imp_announcement)
         print()
         print("!!! Welcome Students !!!")
         print()
@@ -204,7 +201,7 @@ class Student:
         print("!!! Account Created Successfully !!!")
         print(self.Student_Details)
         print(self.Student_Login)
-        self.Student_login()
+        self.Students_login()
 
     def Student_Dashboard(self):
         print()
@@ -216,7 +213,7 @@ class Student:
         print("4. Logout")
         dashboard_inp = int(input("Enter :"))
         if dashboard_inp == 1:
-            self.Teacher_Register()
+            self.Student_Register()
         if dashboard_inp == 2:
             self.Lecture_Assign()
         elif dashboard_inp == 3:
@@ -231,16 +228,32 @@ class Student:
         Student_Name = input("Name :")
         Student_Experience = int(input("Experience (In Years) :"))
         Student_Location = input("Location :")
-        Student_Subject = input("Subject :")
+        Student_phone = input("Phone Number :")
         self.Student_Details.append(self.Student_ID)
         self.Student_Details.append(Student_Name)
         self.Student_Details.append(Student_Experience)
         self.Student_Details.append(Student_Location)
-        self.Student_Details.append(Student_Subject)
+        self.Student_Details.append(Student_phone)
         print("!!! Register Successfully !!!")
         print(self.Student_Details)
         print(self.Student_Login)
         self.Student_Dashboard()
+
+
+    def Lecture_Assign(self):
+        print("1. H J Bhabha")
+        print("2. Exit")
+        batch = int(input("Enter :"))
+
+        if batch == 1:
+            if len(Teachers.H_J_Bhabha) == 0:
+                print("No Lectures")
+                self.Student_Dashboard()
+            else:
+                print(Teachers.H_J_Bhabha[0],end="")
+                print(Teachers.H_J_Bhabha[1],end="")
+        else:
+            self.Student_Dashboard()
 
 
     def EditDetails(self):
@@ -284,7 +297,7 @@ class Student:
 
 
 
-class Admin(Teachers):
+class Admin(Teachers,Student):
     lecture = {}
     
     def __init__(self):
@@ -304,21 +317,18 @@ class Admin(Teachers):
         print()
         print("!!! Welcome Admin !!!")
         print("1. Add Lecture")
-        print("2. Announcement")
-        print("3. Teacher Details")
-        print("4. Student Details")
-        print("5. Logout")
+        print("2. Teacher Details")
+        print("3. Student Details")
+        print("4. Logout")
         admin_input = int(input("Enter :"))
 
         if admin_input == 1:
             self.add_lecture()
         elif admin_input == 2:
-            self.announcement()
+            self.Teacher_List()
         elif admin_input == 3:
-            pass
+            self.Student_List()
         elif admin_input == 4:
-            pass
-        elif admin_input == 5:
             Welcome()
         else:
             print("!!! Invalid Input !!!")
@@ -334,12 +344,27 @@ class Admin(Teachers):
         self.lecture[teacher_name]=lecture_name
         print(self.lecture)
         self.welcome_Admin()
+    
+    def Teacher_List(self):
+        print("Id          Name      Experience    Location        Subject")
+        for i in range(0,len(Teachers.Teacher_Details)):
+            print(Teachers.Teacher_Details[i],"         ",end="")
+            if(i>0 and i%5==0):
+                print()
 
-    def announcement(self):
-        global imp_announcement
-        imp_announcement = "No Announcement"
-        imp_announcement = input("Enter Announcement :")
+        print("1. Exit")
+        exit_inp = int(input("Enter :"))
+        if exit_inp == 0:
+            self.welcome_Admin()
+    
+    def Student_List(self):
+        print("Id          Name      Experience    Location        Subject")
+        for i in range(0,len(Student.Students_Details)):
+            print(Student.Students_Details[i],"         ",end="")
+            if(i>0 and i%4==0):
+                print()
         self.welcome_Admin()
+
 
 
 def Welcome():
